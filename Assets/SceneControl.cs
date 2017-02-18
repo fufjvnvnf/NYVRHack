@@ -14,7 +14,7 @@ public class SceneControl : MonoBehaviour{
 //		person.GetComponents<AudioSource>()[0].Play();
 	}
 	
-	void update (){
+	void Update (){
 		if (System.DateTime.Now.Subtract (v_0).Seconds > 5) {
 			SceneManager.LoadScene (1);
 		}

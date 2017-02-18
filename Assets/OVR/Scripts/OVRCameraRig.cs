@@ -32,6 +32,8 @@ using VR = UnityEngine.VR;
 [ExecuteInEditMode]
 public class OVRCameraRig : MonoBehaviour
 {
+	[SerializeField]
+	public GameObject m_Person = null;
 	/// <summary>
 	/// The left eye camera.
 	/// </summary>
@@ -151,6 +153,7 @@ public class OVRCameraRig : MonoBehaviour
 		{
 			UpdatedAnchors(this);
 		}
+		m_Person.transform.rotation = transform.rotation;
 	}
 
 	public void EnsureGameObjectIntegrity()

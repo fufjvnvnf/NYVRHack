@@ -5,9 +5,8 @@ using System;
 using UnityEngine.SceneManagement;
 
 
-public class SceneControl : MonoBehaviour{
+public class SceneControl_2 : MonoBehaviour{
 
-	public GameObject person;
 	DateTime v_0;
 
 	void Start () {

@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneControl : MonoBehaviour{
 
-	public GameObject person;
 	DateTime v_0;
 
 	void Start () {

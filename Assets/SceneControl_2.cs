@@ -12,12 +12,12 @@ public class SceneControl : MonoBehaviour{
 
 	void Start () {
 		v_0 = System.DateTime.Now;
-//		person.GetComponents<AudioSource>()[0].Play();
+		//		person.GetComponents<AudioSource>()[0].Play();
 	}
-	
+
 	void update (){
 		if (System.DateTime.Now.Subtract (v_0).Seconds > 5) {
-			SceneManager.LoadScene (1);
+			SceneManager.LoadScene (2);
 		}
 	}
 }

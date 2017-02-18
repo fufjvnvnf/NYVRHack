@@ -9,7 +9,7 @@ public class scene_switch : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		System.Threading.Thread.Sleep(5000);
-		SceneManager.LoadScene ("Tower_Scene");
+		SceneManager.LoadScene (1);
 	}
 	
 	// Update is called once per frame

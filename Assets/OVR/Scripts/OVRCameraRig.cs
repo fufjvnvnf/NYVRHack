@@ -32,6 +32,8 @@ using VR = UnityEngine.VR;
 [ExecuteInEditMode]
 public class OVRCameraRig : MonoBehaviour
 {
+	[SerializeField]
+	public GameObject m_person = null;
 	/// <summary>
 	/// The left eye camera.
 	/// </summary>
@@ -114,10 +116,12 @@ public class OVRCameraRig : MonoBehaviour
 	private void UpdateAnchors()
 	{
 		EnsureGameObjectIntegrity();
-
 		if (!Application.isPlaying)
 			return;
-		
+		var rotationVector = m_person.transform.rotation;
+		rotationVector.y = transform.rotation.y;
+		m_person.transform.rotation = rotationVector;
+
 		if (_skipUpdate)
 		{
 			centerEyeAnchor.FromOVRPose(OVRPose.identity);

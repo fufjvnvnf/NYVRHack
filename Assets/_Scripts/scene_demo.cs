@@ -7,7 +7,7 @@ public class scrit : MonoBehaviour {
 
 	void start() {
 		System.Threading.Thread.Sleep (5000);
-		SceneManager.LoadScene ("Tower_Scene");
+		SceneManager.LoadScene ("_Scenes/Tower_Scene");
 	}
 	void Update() {
 		

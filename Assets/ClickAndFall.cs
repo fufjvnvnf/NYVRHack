@@ -16,7 +16,7 @@ public class ClickAndFall : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Physics.Raycast (transform.position, transform.forward, out hit, 100f)) {
+		if (Physics.Raycast (transform.position, transform.forward, out hit, 1000f)) {
 
 			if (Input.GetMouseButtonDown (0)) {
 				bigball.GetComponent<Rigidbody> ().useGravity = true;

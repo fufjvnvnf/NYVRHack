@@ -11,6 +11,8 @@ public class GetSelect : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (OVRInput.Get (OVRInput.Touch.One));
+		if (OVRInput.Get (OVRInput.Touch.One)) {
+			
+		};
 	}
 }

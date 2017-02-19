@@ -323,7 +323,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 			}
 
 			if (delta.Seconds > 10 && stage && !speakings[3].isPlaying) {
-				SceneManager.LoadScene (2);
+				SceneManager.LoadScene (1);
 				stage = false;
 			}
 

@@ -22,6 +22,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System;
+
 #pragma warning disable 414
 
 namespace IBM.Watson.DeveloperCloud.Widgets
@@ -66,8 +67,8 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 		private float m_ThresholdTimeFromLastInput = 3.0f;
 		//3 secs as threshold time. After 3 secs from last OnSpeechInput, we are considering input as new input
 		private float m_TimeAtLastInterim = 0.0f;
-		public ArrayList finalList = new ArrayList();
-		public ArrayList interimList = new ArrayList();
+		public ArrayList finalList = new ArrayList ();
+		public ArrayList interimList = new ArrayList ();
 
 		//		public string[] getKeywordList() {
 		//			string[] results = new string[keywordList.Capacity];
@@ -80,6 +81,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 		//		public void clearKeywords() {
 		//			keywordList = new ArrayList ();
 		//		}
+
 		#endregion
 
 		#region Event Handlers
@@ -148,12 +150,29 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 		private bool audio1 = false;
 		private bool break1 = false;
 		private bool saying1 = false;
+		private bool saying2 = false;
+		private bool audio4 = false;
 		private bool audio2 = false;
+		private bool audio3 = false;
 		private DateTime t0 = System.DateTime.Now;
 		private DateTime tt = System.DateTime.Now;
+		private bool again = false;
 		private AudioSource[] speakings;
 		private int interimTimes = 0;
 		private int finalTimes = 0;
+
+		private bool detectKeyword (string[] keywords)
+		{
+			foreach (string keyword in keywords) {
+				foreach (string sentence in finalList) {
+					if (((string)sentence).Contains (keyword)) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
 		//		void Start ()
 		//		{
 		//			t0 = System.DateTime.Now;
@@ -167,43 +186,102 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 				speakings = this.GetComponents<AudioSource> ();
 				isStart = false;
 				audio1 = true;
+
 			}
 			//		Thread.Sleep (3000);
 			//		StartCoroutine(Fade());
 			TimeSpan delta = System.DateTime.Now.Subtract (t0);
-
+//			bool bad = detectKeyword (new string[] {"Ball", "mass", "weight", "two", "heavy", "light", "different", "high", "heavier", "higher", "masses", "gravity", "acceleration", "speed"});
+//			print (bad);
 			if (delta.Seconds > 17.5 && audio1) {
-				speakings [0].Play();
+				speakings [0].Play ();
 				t0 = System.DateTime.Now;
 				audio1 = false;
 				break1 = true;
 			}
 
-			if (delta.Seconds > 20 && break1) {
+			if (delta.Seconds > 29 && break1) {
 				break1 = false;
 				saying1 = true;
 				t0 = System.DateTime.Now;
+				interimList.Clear ();
+				finalList.Clear ();
+
 			}
 
-			if (delta.Seconds > 25 && saying1) {
-				if (interimList.Count - interimTimes == 0 && delta.Seconds > 2 && interimList.Count != 0) {
+			if (delta.Seconds > 1 && saying1) {
+				if (interimList.Count - interimTimes == 0 && System.DateTime.Now.Subtract(tt).Seconds > 2 && interimList.Count != 0) {
 					saying1 = false;
 					audio2 = true;
 					interimList.Clear ();
 					finalList.Clear ();
+					t0 = System.DateTime.Now;
 					interimTimes = 0;
 					finalTimes = 0;
-					t0 = System.DateTime.Now;
+					again = false;
 				} else {
+					// Add Hint1
+					if (interimList.Count - interimTimes > 0 && !again) {
+						tt = System.DateTime.Now;
+						again = true;
+					}
 					interimTimes = interimList.Count;
 				}
 			}
 
 			if (delta.Seconds > 1 && audio2) {
-				speakings [1].Play(); 
+
+				speakings [1].Play (); 
 				t0 = System.DateTime.Now;
 				audio2 = false;
+				saying2 = true;
+				interimList.Clear ();
+				finalList.Clear ();
 			}
+
+			if (delta.Seconds > 1 && audio4) {
+				speakings [2].Play ();
+				print ("Hint6");
+				t0 = System.DateTime.Now;
+				audio4 = false;
+				saying2 = true;
+			}
+
+			if (delta.Seconds > 6 && saying2) {
+				if (interimList.Count - interimTimes == 0 && System.DateTime.Now.Subtract(tt).Seconds > 2 && interimList.Count != 0) {
+					bool good = detectKeyword (new string[] {"experiment", "ball", "mass", "weight", "two", "heavy", "light", "different", "high", "heavier", "higher", "masses", "gravity", "acceleration", "speed"});
+					interimList.Clear ();
+					finalList.Clear ();
+					interimTimes = 0;
+					finalTimes = 0;
+					if (good && !audio4) {
+						// 5 seconds
+						saying2 = false;
+						audio3 = true;
+						again = false;
+						t0 = System.DateTime.Now;
+						print ("Hint5");
+					} else {
+						saying2 = false;
+						audio4 = true;
+						again = false;
+					}
+				} else {
+					// Hint2
+					if (interimList.Count - interimTimes > 0 && !again) {
+						tt = System.DateTime.Now;
+						again = true;
+					}
+					interimTimes = interimList.Count;
+				}
+			}
+			if (delta.Seconds > 1 && audio3) {
+				print ("Hint7");
+				speakings [3].Play (); 
+				t0 = System.DateTime.Now;
+				audio3 = false;
+			}
+
 
 			//			print("aaa");
 			//

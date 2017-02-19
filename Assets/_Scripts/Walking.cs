@@ -6,7 +6,7 @@ public class Walking : MonoBehaviour {
 
 	public Animator anim;
 	public int speed = 10;
-	public float z = 71;
+	public float z = 91;
 
 	// Use this for initialization
 	void Start () {

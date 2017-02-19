@@ -20,11 +20,20 @@ public class Select_Ball : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		p0 = sphere_0.transform.position;
-		print (p0.ToString());
-		p1 = sphere_1.transform.position;
-		p2 = sphere_2.transform.position;
-		p3 = sphere_3.transform.position;
+//		p0 = sphere_0.transform.position;
+//		Debug.Log (p0.ToString());
+//		p1 = sphere_1.transform.position;
+//		Debug.Log (p1.ToString());
+//
+//		p2 = sphere_2.transform.position;
+//		Debug.Log (p2.ToString());
+//
+//		p3 = sphere_3.transform.position;
+//		Debug.Log (p3.ToString());
+		p0 = new Vector3(-27.2f, 192.9f, 115.3f);
+		p1 = new Vector3 (-27.2f, 193.0f, 106.2f);
+		p2 = new Vector3 (-28.9f, 190.8f, 99.3f);
+		p3 = new Vector3 (-29.0f, 190.8f, 94.2f);
 
 	}
 	

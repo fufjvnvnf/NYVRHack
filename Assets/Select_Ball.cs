@@ -21,6 +21,7 @@ public class Select_Ball : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		p0 = sphere_0.transform.position;
+		print (p0.ToString());
 		p1 = sphere_1.transform.position;
 		p2 = sphere_2.transform.position;
 		p3 = sphere_3.transform.position;
@@ -30,7 +31,9 @@ public class Select_Ball : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		RaycastHit hit;
-		Vector3 rayDirection = transform.TransformDirection (Vector3.forward);
+		Vector3 rayrayDirection = transform.TransformDirection(Vector3.forward);
+		Vector3 rayDirection = new Vector3 (rayrayDirection.x, 0, rayrayDirection.z);
+		Vector3 rayStart = transform.position + rayDirection- new Vector3(0,10,0);
 
 		if (temp != null && flag == false){
 			switch (temp.gameObject.tag) {
@@ -49,13 +52,16 @@ public class Select_Ball : MonoBehaviour {
 			}
 		}
 
-		if (Physics.Raycast (transform.position, transform.forward, out hit, 100f) && flag2 > 2) {
+		if (Physics.Raycast (rayStart, rayDirection, out hit, 1000f) && flag2 > 0) {
 			Debug.Log (hit.collider.name);
 			switch (hit.collider.tag) {
 			case "select_0":
 				flag = true;
 				temp = hit.collider.gameObject.transform;
 				temp.position = p0 + new Vector3 (0, 2, 0);
+				sphere_1.transform.position = p1;
+				sphere_2.transform.position = p2;
+				sphere_3.transform.position = p3;
 				if (Input.GetMouseButtonDown (0)) {
 					temp.gameObject.SetActive (false);
 					flag2--;
@@ -65,6 +71,9 @@ public class Select_Ball : MonoBehaviour {
 				flag = true;
 				temp = hit.collider.gameObject.transform;
 				temp.position = p1 + new Vector3 (0, 2, 0);
+				sphere_0.transform.position = p0;
+				sphere_2.transform.position = p2;
+				sphere_3.transform.position = p3;
 				if (Input.GetMouseButtonDown (0)) {
 					temp.gameObject.SetActive (false);
 					flag2--;
@@ -74,6 +83,9 @@ public class Select_Ball : MonoBehaviour {
 				flag = true;
 				temp = hit.collider.gameObject.transform;
 				temp.position = p2 + new Vector3 (0, 2, 0);
+				sphere_0.transform.position = p0;
+				sphere_1.transform.position = p1;
+				sphere_3.transform.position = p3;
 				if (Input.GetMouseButtonDown (0)) {
 					temp.gameObject.SetActive (false);
 					flag2--;
@@ -83,6 +95,9 @@ public class Select_Ball : MonoBehaviour {
 				flag = true;
 				temp = hit.collider.gameObject.transform;
 				temp.position = p3 + new Vector3 (0, 2, 0);
+				sphere_1.transform.position = p1;
+				sphere_2.transform.position = p2;
+				sphere_0.transform.position = p0;
 				if (Input.GetMouseButtonDown (0)) {
 					temp.gameObject.SetActive (false);
 					flag2--;
@@ -95,6 +110,6 @@ public class Select_Ball : MonoBehaviour {
 		}else {
 			flag = false;
 		}
-		Debug.DrawRay(transform.position + rayDirection, rayDirection * 100000, Color.green);
+		Debug.DrawRay(rayStart, rayDirection*10000, Color.green);
 	}
 }

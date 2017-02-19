@@ -154,6 +154,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 		private bool audio4 = false;
 		private bool audio2 = false;
 		private bool audio3 = false;
+		private bool hint0 = false;
 		private DateTime t0 = System.DateTime.Now;
 		private DateTime tt = System.DateTime.Now;
 		private bool again = false;
@@ -185,12 +186,21 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 			if (isStart) {
 				speakings = this.GetComponents<AudioSource> ();
 				isStart = false;
-				audio1 = true;
+				hint0 = true;
+				// Hint0: Introduction
 
+			}
+			TimeSpan delta = System.DateTime.Now.Subtract (t0);
+
+			if (delta.Seconds > 7 && hint0) {
+				print ("Disappear Hint 0");
+				// Hint0 Disappear
+				t0 = System.DateTime.Now;
+				hint0 = false;
+				audio1 = true;
 			}
 			//		Thread.Sleep (3000);
 			//		StartCoroutine(Fade());
-			TimeSpan delta = System.DateTime.Now.Subtract (t0);
 //			bool bad = detectKeyword (new string[] {"Ball", "mass", "weight", "two", "heavy", "light", "different", "high", "heavier", "higher", "masses", "gravity", "acceleration", "speed"});
 //			print (bad);
 			if (delta.Seconds > 17.5 && audio1) {
@@ -211,6 +221,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 
 			if (delta.Seconds > 1 && saying1) {
 				if (interimList.Count - interimTimes == 0 && System.DateTime.Now.Subtract(tt).Seconds > 2 && interimList.Count != 0) {
+					// Hint1 disappear
 					saying1 = false;
 					audio2 = true;
 					interimList.Clear ();
@@ -220,7 +231,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 					finalTimes = 0;
 					again = false;
 				} else {
-					// Add Hint1
+					// Hint1 appear
 					if (interimList.Count - interimTimes > 0 && !again) {
 						tt = System.DateTime.Now;
 						again = true;
@@ -256,6 +267,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 					finalTimes = 0;
 					if (good && !audio4) {
 						// 5 seconds
+						// Hint2 disappear
 						saying2 = false;
 						audio3 = true;
 						again = false;
@@ -267,7 +279,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 						again = false;
 					}
 				} else {
-					// Hint2
+					// Hint2 appear
 					if (interimList.Count - interimTimes > 0 && !again) {
 						tt = System.DateTime.Now;
 						again = true;

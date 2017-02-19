@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Select_Ball : MonoBehaviour {
 
@@ -18,6 +19,10 @@ public class Select_Ball : MonoBehaviour {
 	bool flag = false;
 	int flag2 = 2;
 
+	private ArrayList selected = new ArrayList();
+
+	private AudioSource[] lines;
+
 	// Use this for initialization
 	void Start () {
 //		p0 = sphere_0.transform.position;
@@ -34,6 +39,7 @@ public class Select_Ball : MonoBehaviour {
 		p1 = new Vector3 (-27.2f, 193.0f, 106.2f);
 		p2 = new Vector3 (-28.9f, 190.8f, 99.3f);
 		p3 = new Vector3 (-29.0f, 190.8f, 94.2f);
+		lines = this.GetComponents<AudioSource> ();
 
 	}
 	
@@ -74,6 +80,7 @@ public class Select_Ball : MonoBehaviour {
 				if (Input.GetMouseButtonDown (0)) {
 					temp.gameObject.SetActive (false);
 					flag2--;
+					selected.Add (sphere_0);
 				}
 				break;
 			case "select_1":
@@ -86,6 +93,7 @@ public class Select_Ball : MonoBehaviour {
 				if (Input.GetMouseButtonDown (0)) {
 					temp.gameObject.SetActive (false);
 					flag2--;
+					selected.Add (sphere_1);
 				}
 				break;
 			case "select_2":
@@ -98,6 +106,7 @@ public class Select_Ball : MonoBehaviour {
 				if (Input.GetMouseButtonDown (0)) {
 					temp.gameObject.SetActive (false);
 					flag2--;
+					selected.Add (sphere_2);
 				}
 				break;
 			case "select_3":
@@ -110,6 +119,7 @@ public class Select_Ball : MonoBehaviour {
 				if (Input.GetMouseButtonDown (0)) {
 					temp.gameObject.SetActive (false);
 					flag2--;
+					selected.Add(sphere_3);
 				}
 				break;
 			default:
@@ -120,5 +130,15 @@ public class Select_Ball : MonoBehaviour {
 			flag = false;
 		}
 		Debug.DrawRay(rayStart, rayDirection*10000, Color.green);
+
+
+		if(lines[1].isPlaying && ! lines[2].isPlaying){
+			if(((GameObject)selected[0]).transform.localScale != ((GameObject)selected[1]).transform.localScale){
+				lines[2].Play();
+				if(!lines[1].isPlaying)
+					SceneManager.LoadScene(2);
+			}
+			else lines[1].Play();
+		}
 	}
 }

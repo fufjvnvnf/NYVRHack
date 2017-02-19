@@ -25,7 +25,7 @@ public class ClickAndFall : MonoBehaviour {
 	void Update () {
 		
 		TimeSpan delta = System.DateTime.Now.Subtract (t0);
-
+//
 		if (delta.Seconds > 0.5 && audio1) {
 			speakings [0].Play ();
 			audio1 = false;
@@ -35,10 +35,12 @@ public class ClickAndFall : MonoBehaviour {
 			speakings [0].Stop ();
 			audio10 = false;
 		}
+		Physics.Raycast (transform.position, transform.forward, out hit, 10000f);
+		print (hit.collider.name);
+//
 
-
-		if (Physics.Raycast (transform.position, transform.forward, out hit, 1000f)) {
-
+		if (Physics.Raycast (transform.position, transform.forward, out hit, 10000f)) {
+			Debug.Log (hit.collider.name);
 			if (Input.GetMouseButtonDown (0)) {
 				audio10 = true;
 				bigball.GetComponent<Rigidbody> ().useGravity = true;

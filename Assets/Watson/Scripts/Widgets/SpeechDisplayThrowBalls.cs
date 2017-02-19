@@ -144,7 +144,10 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 		}
 
 		#endregion
-
+		public GameObject Hint0;
+		public GameObject Hint1;
+		public GameObject Hint2;
+		public GameObject Hint3;
 		private SpeechDisplayWidget speech = null;
 		private bool isStart = true;
 		private bool audio1 = false;
@@ -202,7 +205,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 				speakings = this.GetComponents<AudioSource> ();
 				isStart = false;
 				hint0 = true;
-				// Hint0: Introduction
+				Hint0.SetActive (true);
 
 			}
 
@@ -222,14 +225,14 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 //			print (bad);
 			if (delta.Seconds > 5 && audio1 && !speakings [0].isPlaying) {
 				print (" Hint 0");
-
+				Hint0.SetActive (false);
 				t0 = System.DateTime.Now;
 				audio1 = false;
 				break1 = true;
 			}
 
 			if (delta.Seconds > 1 && break1) {
-				
+				Hint1.SetActive (true);
 				speakings [1].Play ();
 				break1 = false;
 				saying1 = true;
@@ -270,6 +273,8 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 						again = false;
 						t0 = System.DateTime.Now;
 						print ("Hint5");
+						Hint1.SetActive (false);
+
 					} else {
 						saying1 = false;
 						audio2 = true;
@@ -294,6 +299,8 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 			}
 
 			if (delta.Seconds > 1 && audio3) {
+				Hint2.SetActive (true);
+
 				print ("Hint7");
 				speakings [3].Play (); 
 				t0 = System.DateTime.Now;
@@ -340,6 +347,8 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 						audio5 = true;
 						again = false;
 						t0 = System.DateTime.Now;
+						Hint2.SetActive (false);
+
 						print ("Hint5");
 					} else {
 						saying2 = false;

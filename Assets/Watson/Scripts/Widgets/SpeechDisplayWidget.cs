@@ -22,6 +22,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
 #pragma warning disable 414
 
@@ -164,6 +165,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 		private AudioSource[] speakings;
 		private int interimTimes = 0;
 		private int finalTimes = 0;
+		private bool stage = false;
 
 		private bool detectKeyword (string[] keywords)
 		{
@@ -221,11 +223,12 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 				t0 = System.DateTime.Now;
 				interimList.Clear ();
 				finalList.Clear ();
+				again = true;
 
 			}
 
 			if (delta.Seconds > 1 && saying1) {
-				if (interimList.Count - interimTimes == 0 && System.DateTime.Now.Subtract(tt).Seconds > 2 && interimList.Count != 0) {
+				if (interimList.Count - interimTimes == 0 && System.DateTime.Now.Subtract (tt).Seconds > 1 && interimList.Count != 0) {
 					// Hint1 disappear
 					Hint1.SetActive(false);
 					saying1 = false;
@@ -239,11 +242,20 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 				} else {
 					// Hint1 appear
 					Hint1.SetActive(true);
-					if (interimList.Count - interimTimes > 0 && !again) {
+//					if (interimList.Count - interimTimes > 0 && !again) {
+//						tt = System.DateTime.Now;
+//						again = true;
+//					}
+//					interimTimes = interimList.Count;
+					if (interimList.Count == 0 || again) {
 						tt = System.DateTime.Now;
-						again = true;
+						again = false;
+
 					}
-					interimTimes = interimList.Count;
+					if (System.DateTime.Now.Subtract (tt).Seconds > 1.5) {
+						interimTimes = interimList.Count;
+						tt = System.DateTime.Now;
+					}
 				}
 			}
 
@@ -263,10 +275,12 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 				t0 = System.DateTime.Now;
 				audio4 = false;
 				saying2 = true;
+				again = false;
+
 			}
 
 			if (delta.Seconds > 6 && saying2) {
-				if (interimList.Count - interimTimes == 0 && System.DateTime.Now.Subtract(tt).Seconds > 2 && interimList.Count != 0) {
+				if (interimList.Count - interimTimes == 0  && System.DateTime.Now.Subtract (tt).Seconds > 1 && interimList.Count != 0) {
 					bool good = detectKeyword (new string[] {"experiment", "ball", "mass", "weight", "two", "heavy", "light", "different", "high", "heavier", "higher", "masses", "gravity", "acceleration", "speed"});
 					interimList.Clear ();
 					finalList.Clear ();
@@ -289,11 +303,15 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 				} else {
 					// Hint2 appear
 					Hint2.SetActive(true);
-					if (interimList.Count - interimTimes > 0 && !again) {
+					if (interimList.Count == 0 || again) {
 						tt = System.DateTime.Now;
-						again = true;
+						again = false;
+
 					}
-					interimTimes = interimList.Count;
+					if (System.DateTime.Now.Subtract (tt).Seconds > 1.5) {
+						interimTimes = interimList.Count;
+						tt = System.DateTime.Now;
+					}
 				}
 			}
 			if (delta.Seconds > 1 && audio3) {
@@ -301,6 +319,12 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 				speakings [3].Play (); 
 				t0 = System.DateTime.Now;
 				audio3 = false;
+				stage = true;
+			}
+
+			if (delta.Seconds > 10 && stage && !speakings[3].isPlaying) {
+				SceneManager.LoadScene (2);
+				stage = false;
 			}
 
 

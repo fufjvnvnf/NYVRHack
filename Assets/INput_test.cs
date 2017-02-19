@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ovrin : MonoBehaviour {
+public class INput_test : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

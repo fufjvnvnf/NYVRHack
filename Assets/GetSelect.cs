@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ovrin : MonoBehaviour {
+public class GetSelect : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -11,6 +11,8 @@ public class ovrin : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (OVRInput.Get (OVRInput.Touch.One)) {
+			
+		};
 	}
 }

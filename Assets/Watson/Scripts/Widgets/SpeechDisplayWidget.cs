@@ -203,7 +203,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 			//		StartCoroutine(Fade());
 //			bool bad = detectKeyword (new string[] {"Ball", "mass", "weight", "two", "heavy", "light", "different", "high", "heavier", "higher", "masses", "gravity", "acceleration", "speed"});
 //			print (bad);
-			if (delta.Seconds > 17.5 && audio1) {
+			if (delta.Seconds > 10.5 && audio1) {
 				speakings [0].Play ();
 				t0 = System.DateTime.Now;
 				audio1 = false;

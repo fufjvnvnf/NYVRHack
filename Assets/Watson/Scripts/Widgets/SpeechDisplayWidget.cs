@@ -145,6 +145,9 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 
 		#endregion
 
+		public GameObject Hint0;
+		public GameObject Hint1;
+		public GameObject Hint2;
 		private SpeechDisplayWidget speech = null;
 		private bool isStart = true;
 		private bool audio1 = false;
@@ -188,6 +191,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 				isStart = false;
 				hint0 = true;
 				// Hint0: Introduction
+				Hint0.SetActive(true);
 
 			}
 			TimeSpan delta = System.DateTime.Now.Subtract (t0);
@@ -195,6 +199,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 			if (delta.Seconds > 7 && hint0) {
 				print ("Disappear Hint 0");
 				// Hint0 Disappear
+				Hint0.SetActive(false);
 				t0 = System.DateTime.Now;
 				hint0 = false;
 				audio1 = true;
@@ -222,6 +227,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 			if (delta.Seconds > 1 && saying1) {
 				if (interimList.Count - interimTimes == 0 && System.DateTime.Now.Subtract(tt).Seconds > 2 && interimList.Count != 0) {
 					// Hint1 disappear
+					Hint1.SetActive(false);
 					saying1 = false;
 					audio2 = true;
 					interimList.Clear ();
@@ -232,6 +238,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 					again = false;
 				} else {
 					// Hint1 appear
+					Hint1.SetActive(true);
 					if (interimList.Count - interimTimes > 0 && !again) {
 						tt = System.DateTime.Now;
 						again = true;
@@ -268,6 +275,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 					if (good && !audio4) {
 						// 5 seconds
 						// Hint2 disappear
+						Hint2.SetActive(false);
 						saying2 = false;
 						audio3 = true;
 						again = false;
@@ -280,6 +288,7 @@ namespace IBM.Watson.DeveloperCloud.Widgets
 					}
 				} else {
 					// Hint2 appear
+					Hint2.SetActive(true);
 					if (interimList.Count - interimTimes > 0 && !again) {
 						tt = System.DateTime.Now;
 						again = true;

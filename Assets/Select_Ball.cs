@@ -131,7 +131,11 @@ public class Select_Ball : MonoBehaviour {
 		}
 		Debug.DrawRay(rayStart, rayDirection*10000, Color.green);
 
-
+		if (selected.Count == 2) {
+			if (((GameObject)selected [0]).transform.localScale != ((GameObject)selected [1]).transform.localScale) {
+				SceneManager.LoadScene(2);
+			}
+		}
 		if(lines[1].isPlaying && ! lines[2].isPlaying){
 			if(((GameObject)selected[0]).transform.localScale != ((GameObject)selected[1]).transform.localScale){
 				lines[2].Play();
